@@ -162,9 +162,16 @@ class medoo
 			return false;
 		}
 
-		$this->logs[] = $query;
+		$log = array();
+		$log['query'] = $query;
+		$result = $this->pdo->query($query);
+		if($this->error()[0]!="00000")
+        		$log['result'] = implode(" : ",$this->error());
+		else
+			$log['result'] = "Success";
+		$this->logs[] = $log;
 
-		return $this->pdo->query($query);
+		return $result;
 	}
 
 	public function exec($query)
@@ -178,9 +185,16 @@ class medoo
 			return false;
 		}
 
-		$this->logs[] = $query;
+		$log = array();
+		$log['query'] = $query;
+		$result = $this->pdo->exec($query);
+		if($this->error()[0]!="00000")
+        		$log['result'] = implode(" : ",$this->error());
+		else
+			$log['result'] = "Success";
+		$this->logs[] = $log;
 
-		return $this->pdo->exec($query);
+		return $result;
 	}
 
 	public function quote($string)
@@ -1090,11 +1104,6 @@ class medoo
 	public function error()
 	{
 		return $this->pdo->errorInfo();
-	}
-
-	public function last_query()
-	{
-		return end($this->logs);
 	}
 
 	public function log()
