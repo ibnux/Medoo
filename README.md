@@ -56,6 +56,12 @@ $database->insert('account', [
     'age' => 25,
     'lang' => ['en', 'fr', 'jp', 'cn']
 ]);
+
+// show log in array()
+$database->log();
+//or
+print_r($database->log());
+//it will show every query and status 
 ```
 
 ## Contribution Guides
